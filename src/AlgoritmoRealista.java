@@ -1,52 +1,52 @@
 public class AlgoritmoRealista {
 
     /**
-     * Selecciona el conjunto de actividades que pueden realizarse
-     * sin solapamiento temporal, utilizando un algoritmo voraz.
+     * Selects the set of activities that can be performed
+     * without time overlap, using a greedy algorithm.
      *
-     * @param c Array con los tiempos de comienzo de las actividades.
-     * @param f Array con los tiempos de finalización de las actividades.
-     * @return Array booleano donde true indica que la actividad ha sido seleccionada.
+     * @param c array with the start times of the activities
+     * @param f array with the end times of the activities
+     * @return boolean array where true indicates the activity has been selected
      */
-    public static boolean[] seleccionarActividades(int[] c, int[] f) {
+    public static boolean[] selectActivities(int[] c, int[] f) {
         if (c == null || f == null) {
-            throw new IllegalArgumentException("Los arrays c y f no pueden ser null.");
+            throw new IllegalArgumentException("The arrays c and f cannot be null.");
         }
         if (c.length != f.length) {
-            throw new IllegalArgumentException("Los arrays c y f deben tener la misma longitud.");
+            throw new IllegalArgumentException("The arrays c and f must have the same length.");
         }
 
         boolean[] s = new boolean[c.length];
         if (c.length == 0)
             return s;
 
-        // Orden de índices por tiempo de finalización (de menor a mayor)
-        int[] orden = ordenarIndicesPorFinalizacion(f);
+        // Order indices by finish time (ascending)
+        int[] orden = sortIndicesByFinishTime(f);
 
-        // Seleccionamos la primera según ese orden
+        // Select the first activity according to that order
         s[orden[0]] = true;
-        int ultimaSeleccionada = orden[0];
+        int lastSelected = orden[0];
 
         for (int k = 1; k < c.length; k++) {
-            int actual = orden[k];
-            if (c[actual] >= f[ultimaSeleccionada]) {
-                s[actual] = true;
-                ultimaSeleccionada = actual;
+            int current = orden[k];
+            if (c[current] >= f[lastSelected]) {
+                s[current] = true;
+                lastSelected = current;
             } else {
-                s[actual] = false;
+                s[current] = false;
             }
         }
         return s;
     }
 
     /**
-     * Ordena los índices de las actividades en función de su tiempo de finalización
-     * (de menor a mayor).
+     * Sorts the indices of the activities based on their finish time
+     * (ascending order).
      *
-     * @param f Array con los tiempos de finalización de las actividades.
-     * @return Array de índices ordenados según los tiempos de finalización.
+     * @param f array with the end times of the activities
+     * @return array of indices sorted according to finish times
      */
-    private static int[] ordenarIndicesPorFinalizacion(int[] f) {
+    private static int[] sortIndicesByFinishTime(int[] f) {
         int[] orden = new int[f.length];
         orden[0] = 0;
 

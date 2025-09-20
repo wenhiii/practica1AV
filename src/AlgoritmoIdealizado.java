@@ -1,24 +1,24 @@
 public class AlgoritmoIdealizado {
 
     /**
-     * Selecciona actividades compatibles usando un algoritmo voraz.
+     * Selects compatible activities using a greedy algorithm.
      *
-     * @param c array con los tiempos de inicio de las actividades
-     * @param f array con los tiempos de fin de las actividades
-     * @return un array booleano que indica qué actividades han sido seleccionadas
+     * @param c array with the start times of the activities
+     * @param f array with the end times of the activities
+     * @return a boolean array indicating which activities have been selected
      */
-    public static boolean[] seleccionarActividades(int[] c, int[] f) {
+    public static boolean[] selectActivities(int[] c, int[] f) {
         if (c == null || f == null) {
-            throw new IllegalArgumentException("Los arrays c y f no pueden ser null.");
+            throw new IllegalArgumentException("The arrays c and f cannot be null.");
         }
         if (c.length != f.length) {
-            throw new IllegalArgumentException("Los arrays c y f deben tener la misma longitud.");
+            throw new IllegalArgumentException("The arrays c and f must have the same length.");
         }
         boolean[] s = new boolean[c.length];
         if (c.length == 0)
             return s;
 
-        // PRECONDICIÓN: c y f ya están ordenados por f ascendente
+        // PRECONDITION: c and f are already sorted by f ascending
         s[0] = true;
         int i = 0;
 
