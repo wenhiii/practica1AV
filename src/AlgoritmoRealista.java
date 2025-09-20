@@ -9,28 +9,34 @@ public class AlgoritmoRealista {
      * @return Array booleano donde true indica que la actividad ha sido seleccionada.
      */
     public static boolean[] seleccionarActividades(int[] c, int[] f) {
-        int n = c.length;
-        boolean[] seleccionadas = new boolean[n];
-
-        // 1. Ordenar las actividades por su tiempo de finalización
-        int[] orden = ordenarIndicesPorFinalizacion(f);
-
-        // 2. Seleccionar la primera actividad (la que termina antes)
-        seleccionadas[orden[0]] = true;
-        int ultimaSeleccionada = orden[0];
-
-        // 3. Recorrer las actividades restantes en el orden correcto
-        for (int k = 1; k < n; k++) {
-            int actual = orden[k];
-            if (c[actual] >= f[ultimaSeleccionada]) {
-                seleccionadas[actual] = true;
-                ultimaSeleccionada = actual;
-            } else {
-                seleccionadas[actual] = false;
-            }
+        if (c == null || f == null) {
+            throw new IllegalArgumentException("Los arrays c y f no pueden ser null.");
+        }
+        if (c.length != f.length) {
+            throw new IllegalArgumentException("Los arrays c y f deben tener la misma longitud.");
         }
 
-        return seleccionadas;
+        boolean[] s = new boolean[c.length];
+        if (c.length == 0)
+            return s;
+
+        // Orden de índices por tiempo de finalización (de menor a mayor)
+        int[] orden = ordenarIndicesPorFinalizacion(f);
+
+        // Seleccionamos la primera según ese orden
+        s[orden[0]] = true;
+        int ultimaSeleccionada = orden[0];
+
+        for (int k = 1; k < c.length; k++) {
+            int actual = orden[k];
+            if (c[actual] >= f[ultimaSeleccionada]) {
+                s[actual] = true;
+                ultimaSeleccionada = actual;
+            } else {
+                s[actual] = false;
+            }
+        }
+        return s;
     }
 
     /**
