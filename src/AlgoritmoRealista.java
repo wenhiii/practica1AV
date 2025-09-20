@@ -43,22 +43,22 @@ public class AlgoritmoRealista {
      * Sorts the indices of the activities based on their finish time
      * (ascending order).
      *
-     * @param f array with the end times of the activities
+     * @param v1 array with the end times of the activities
      * @return array of indices sorted according to finish times
      */
-    private static int[] sortIndicesByFinishTime(int[] f) {
-        int[] orden = new int[f.length];
-        orden[0] = 0;
+    private static int[] sortIndicesByFinishTime(int[] v1) {
+        int[] v2 = new int[v1.length];
+        v2[0] = 0;
 
-        for (int i = 1; i < f.length; i++) {
-            int finActual = f[i];
+        for (int i = 1; i < v1.length; i++) {
+            int aux = v1[i];
             int j;
-            for (j = i - 1; j >= 0 && f[orden[j]] > finActual; j--) {
-                orden[j + 1] = orden[j];
+            for (j = i - 1; j >= 0 && v1[v2[j]] > aux; j--) {
+                v2[j + 1] = v2[j];
             }
-            orden[j + 1] = i;
+            v2[j + 1] = i;
         }
 
-        return orden;
+        return v2;
     }
 }
